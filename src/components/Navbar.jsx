@@ -1,6 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from "axios"
 
 const Navbar = () => {
+    const [list, setList] = useState([])
+    const [buttonText, setButtonText] = useState('')
+    const [buttonShow, setButtonShow] = useState(false)
+    useEffect(() => {
+        async function fetchData() {
+            const data = await axios.get("http://localhost:8000/navbaritem")
+            setList(data.data.menuItem.split(","))
+            setButtonText(data.data.buttonText)
+            setButtonShow(data.data.buttonShow)
+        }
+        fetchData()
+
+    }, [])
     return (
         <nav id="nav">
             <div className="container">
@@ -10,18 +24,17 @@ const Navbar = () => {
                     </div>
                     <div className="nav-list">
                         <ul>
-                            <li><a href="#">Home</a> </li>
-                            <li><a href="#">About</a> </li>
-                            <li><a href="#">Services</a> </li>
-                            <li><a href="#">Resume</a> </li>
-                            <li><a href="#">Portfolio</a> </li>
-                            <li><a href="#">Testimonial</a> </li>
-                            <li><a href="#">Blog</a> </li>
+                            {list.map((item) => (
+                                <li><a href="#">{item}</a> </li>
+                            ))}
                         </ul>
                     </div>
-                    <div>
-                        <button className="nav-button">Contact Us</button>
-                    </div>
+                    {
+                        buttonShow &&
+                        <div>
+                            <button className="nav-button">{buttonText}</button>
+                        </div>
+                    }
                 </div>
             </div>
         </nav>
