@@ -1,6 +1,18 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 
 const Service = () => {
+    const [services, setServices] = useState([])
+    useEffect(() => {
+        async function fatchData() {
+            const data = await
+                axios.get('http://localhost:8000/serviceitem').then((res) => {
+                    setServices(res.data)
+                })
+
+        }
+        fatchData()
+    }, [])
     return (
         <section id="service">
             <div className="container">
@@ -15,46 +27,19 @@ const Service = () => {
                         <h2>Services I offer</h2>
                     </div>
                     <div className="service-offer">
-                        <div className="service-box">
-                            <img src="./image/ser1.png" alt="logo" />
-                            <h4>UI/UX Design</h4>
-                            <p>Hen our power of choice is untrammelled and when nothing prevents our being able</p>
-                        </div>
-                        <div className="service-box">
-                            <img src="./image/ser2.png" alt="logo" />
-                            <h4>Mobile App</h4>
-                            <p>Hen our power of choice is untrammelled and when nothing prevents our being able</p>
-                        </div>
-                        <div className="service-box">
-                            <img src="./image/ser3.png" alt="logo" />
-                            <h4> Graphic Design</h4>
-                            <p>Hen our power of choice is untrammelled and when nothing prevents our being able</p>
-                        </div>
-                        <div className="service-box">
-                            <img src="./image/ser4.png" alt="logo" />
-                            <h4> Web Developer</h4>
-                            <p>Hen our power of choice is untrammelled and when nothing prevents our being able</p>
-                        </div>
-                        <div className="service-box">
-                            <img src="./image/ser1.png" alt="logo" />
-                            <h4>UI/UX Design</h4>
-                            <p>Hen our power of choice is untrammelled and when nothing prevents our being able</p>
-                        </div>
-                        <div className="service-box">
-                            <img src="./image/ser2.png" alt="logo" />
-                            <h4>Mobile App</h4>
-                            <p>Hen our power of choice is untrammelled and when nothing prevents our being able</p>
-                        </div>
-                        <div className="service-box">
-                            <img src="./image/ser3.png" alt="logo" />
-                            <h4> Graphic Design</h4>
-                            <p>Hen our power of choice is untrammelled and when nothing prevents our being able</p>
-                        </div>
-                        <div className="service-box">
-                            <img src="./image/ser4.png" alt="logo" />
-                            <h4> Web Developer</h4>
-                            <p>Hen our power of choice is untrammelled and when nothing prevents our being able</p>
-                        </div>
+                        {
+                            services.map((item) => (
+
+                                <div className="service-box">
+                                    {
+                                        item.showImage &&
+                                        <img src="./image/ser1.png" alt="logo" />
+                                    }
+                                    <h4>{item.title}</h4>
+                                    <p>{item.subTitle}</p>
+                                </div>
+                            ))
+                        }
                     </div>
                 </div>
             </div>
