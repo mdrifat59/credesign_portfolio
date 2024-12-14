@@ -1,14 +1,15 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import axios from 'axios' 
+import axios from 'axios'
 
 const Banner = () => {
     const [subHeading, setSubHeading] = useState("")
     const [heading, setHeading] = useState("")
     const [paragraph, setParagrapha] = useState("")
     const [buttonText, setButtonText] = useState("")
+    const [bannerImage, setBannerImage] = useState('')
     const [buttonShow, setButtonShow] = useState(false)
-    const [circuleShow, setCirculeShow] = useState(false) 
+    const [circuleShow, setCirculeShow] = useState(false)
 
     useEffect(() => {
         async function fatchData() {
@@ -18,7 +19,8 @@ const Banner = () => {
             setParagrapha(data.data.paragraph)
             setButtonText(data.data.buttonText)
             setButtonShow(data.data.buttonShow)
-            setCirculeShow(data.data.circuleShow)  
+            setCirculeShow(data.data.circuleShow)
+            setBannerImage(data.data.image)
         }
         fatchData()
     }, [])
@@ -45,7 +47,7 @@ const Banner = () => {
                         }
                     </div>
                     <div className="banner-right">
-                        <img src="./image/banner.jpg" alt="" />
+                        <img src={`http://localhost:8000/${bannerImage}`} alt="" />
                     </div>
                 </div>
             </div>
