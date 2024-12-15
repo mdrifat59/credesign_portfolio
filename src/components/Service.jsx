@@ -33,7 +33,7 @@ const Service = () => {
                                 <div className="service-box">
                                     {
                                         item.showImage &&
-                                        <img src="./image/ser1.png" alt="logo" />
+                                        <img src={`http://localhost:8000/${item.image}`} alt="logo" />
                                     }
                                     <h4>{item.title}</h4>
                                     <p>{item.subTitle}</p>
