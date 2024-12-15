@@ -14,6 +14,7 @@ const About = () => {
     const [bagTitle_2, setBagTitle_2] = useState('')
     const [bagNumber_1, setBagNumber_1] = useState('')
     const [bagNumber_2, setBagNumber_2] = useState('')
+    const [image, setImage] = useState('')
 
     useEffect(() => {
         async function fatchData() {
@@ -30,6 +31,7 @@ const About = () => {
             setBagNumber_2(data.data.bagNumber_2)
             setBagTitle_1(data.data.bagTitle_1)
             setBagTitle_2(data.data.bagTitle_2)
+            setImage(data.data.image)
         }
         fatchData()
     }, [])
@@ -38,7 +40,7 @@ const About = () => {
             <div className="container">
                 <div className="about-main">
                     <div className="about-left">
-                        <img src="./image/about.png" alt="" />
+                        <img src={`http://localhost:8000/${image}`} alt="" />
                     </div>
                     <div className="about-right">
                         <div className="banner-circal">
