@@ -1,6 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 
 const Portfolio = () => {
+    const [portfolio, setPortfolio] = useState([])
+    useEffect(() => {
+        async function fatchData() {
+            const { data } = await axios.get('http://localhost:8000/portfolioitem')
+            setPortfolio(data)
+        }
+        fatchData()
+    }, [])
     return (
         <section id="portfolio">
             <div className="container">
@@ -14,25 +23,13 @@ const Portfolio = () => {
                     <h2>VISIT MY PORTFOLIO</h2>
                 </div>
                 <div className="portfolio-content">
-                    <div className="portfolio-box">
-                        <img src="./image/Placeholder.png" alt="" />
-                    </div>
-                    <div className="portfolio-box">
-                        <img src="./image/Placeholder (1).png" alt="" />
-                    </div>
-                    <div className="portfolio-box">
-                        <img src="./image/Placeholder (2).png" alt="" />
-                    </div>
-                    <div className="portfolio-box">
-                        <img src="./image/Placeholder (3).png" alt="" />
-                    </div>
-                    <div className="portfolio-box">
-                        <img src="./image/Placeholder (4).png" alt="" />
-                    </div>
-                    <div className="portfolio-box">
-                        <img src="./image/Placeholder (5).png" alt="" />
-                    </div>
-
+                    {
+                        portfolio.map((item) => ( 
+                            <div className="portfolio-box">
+                                <img src={`http://localhost:8000/${item.image}`} alt="" />
+                            </div>
+                        ))
+                    }
                 </div>
             </div>
         </section>
