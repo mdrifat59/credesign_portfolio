@@ -1,6 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
+import axios from 'axios'
 
 const Contact = () => {
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
+    const [subject, setSubject] = useState('')
+    const [massage, setMassage] = useState('')
+
+    const handleSendMessage = () => [
+        console.log(name, email, phone, subject, massage),
+        axios.post('http://localhost:8000/email', { name, email, phone, subject, massage }).then((res) => {
+            console.log(res);
+            setEmail('')
+            setMassage('')
+            setName('')
+            setPhone('')
+            setSubject('')
+        }).catch((err) => {
+            console.log(err);
+
+        })
+
+    ]
     return (
         <>
             <section id="contact">
@@ -16,12 +38,12 @@ const Contact = () => {
                     </div>
                     <div className="contact-content">
                         <div className="contact-left">
-                            <input type="text" placeholder="Your name" />
-                            <input type="email" placeholder="Your email" />
-                            <input type="number" placeholder="Your phone" />
-                            <input type="text" placeholder="Subject" />
-                            <textarea name="" placeholder="Your masage"></textarea>
-                            <button className="nav-button">Send Me Message</button>
+                            <input value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Your name" />
+                            <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Your email" />
+                            <input value={phone} onChange={(e) => setPhone(e.target.value)} type="number" placeholder="Your phone" />
+                            <input value={subject} onChange={(e) => setSubject(e.target.value)} type="text" placeholder="Subject" />
+                            <textarea value={massage} onChange={(e) => setMassage(e.target.value)} name="" placeholder="Your masage"></textarea>
+                            <button onClick={handleSendMessage} className="nav-button">Send Me Message</button>
                         </div>
                         <div className="contact-right">
                             <div className="contact-right-content">
