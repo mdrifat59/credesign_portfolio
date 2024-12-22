@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 const Contact = () => {
@@ -7,8 +7,10 @@ const Contact = () => {
     const [phone, setPhone] = useState('')
     const [subject, setSubject] = useState('')
     const [massage, setMassage] = useState('')
+    const [contact, setContact] = useState([])
 
-    const handleSendMessage = () => [
+     
+    const handleSendMessage = () => {
         console.log(name, email, phone, subject, massage),
         axios.post('http://localhost:8000/email', { name, email, phone, subject, massage }).then((res) => {
             console.log(res);
@@ -20,9 +22,16 @@ const Contact = () => {
         }).catch((err) => {
             console.log(err);
 
-        })
+        }) 
+    }
 
-    ]
+    useEffect(()=>{
+            async function fatchData() {
+                const {data} = await axios.get('http://localhost:8000/contactitem')
+                setContact(data)  
+            }
+            fatchData()
+        },[])
     return (
         <>
             <section id="contact">
@@ -52,7 +61,7 @@ const Contact = () => {
                                 </div>
                                 <div className="contact-right-content-last">
                                     <h3>Address</h3>
-                                    <p>202 Dog Hill Lane Beloit, KS 67420</p>
+                                    <p>{contact.address}</p>
                                 </div>
                             </div>
                             <div className="contact-right-content">
@@ -61,7 +70,7 @@ const Contact = () => {
                                 </div>
                                 <div className="contact-right-content-last">
                                     <h3>Phone</h3>
-                                    <p>+01589634755</p>
+                                    <p>{contact.phone}</p>
                                 </div>
                             </div>
                             <div className="contact-right-content">
@@ -70,7 +79,7 @@ const Contact = () => {
                                 </div>
                                 <div className="contact-right-content-last">
                                     <h3>Email</h3>
-                                    <p>credesign@gmail.com</p>
+                                    <p>{contact.email}</p>
                                 </div>
                             </div>
                         </div>
