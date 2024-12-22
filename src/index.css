@@ -357,8 +357,9 @@
      padding: 50px 0;
  }
  .patner-content{
-     display: flex;
-     justify-content: space-between;
+     display: flex; 
+     flex-wrap: wrap;
+     gap: 23px;
      margin-top: 50px;
  }
  .patner-box{

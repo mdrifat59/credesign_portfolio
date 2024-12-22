@@ -1,6 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 
 const Partner = () => {
+    const [partner, setPartner] = useState([])
+    useEffect(() => {
+        async function fatchData() {
+            const { data } = await axios.get('http://localhost:8000/partneritem')
+            setPartner(data)
+        }
+        fatchData()
+    }, [])
     return (
         <section id="partner">
             <div className="container">
@@ -14,24 +23,13 @@ const Partner = () => {
                     <h2>REPUTED PARTNER</h2>
                 </div>
                 <div className="patner-content">
-                    <div className="patner-box">
-                        <img src="./image/Frame.png" alt="" />
-                    </div>
-                    <div className="patner-box">
-                        <img src="./image/Frame (1).png" alt="" />
-                    </div>
-                    <div className="patner-box">
-                        <img src="./image/Frame (2).png" alt="" />
-                    </div>
-                    <div className="patner-box">
-                        <img src="./image/Frame (3).png" alt="" />
-                    </div>
-                    <div className="patner-box">
-                        <img src="./image/Frame (4).png" alt="" />
-                    </div>
-                    <div className="patner-box">
-                        <img src="./image/Frame.png" alt="" />
-                    </div>
+                    {
+                        partner.map((item, index) => ( 
+                            <div key={index} className="patner-box">
+                                <img src={`http://localhost:8000/${item.image}`} alt="" />
+                            </div>
+                        ))
+                    }
                 </div>
             </div>
         </section>
